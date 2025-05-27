@@ -1,34 +1,24 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body} from '@nestjs/common';
 import { CoffeService } from './coffes.service';
-import { CofeeDto } from './types/coffes';  
+import { CofeeDto } from './types/coffes'; 
 
-@Controller()
+@Controller('coffees') 
 export class CoffeController {
-  constructor(private readonly appService: CoffeService) {}
+ constructor(private readonly appService: CoffeService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+@Get() 
+getCofees(): CofeeDto[] {
+ return this.appService.getCofee();
+ }
 
-  @Get('Cofees')
-  getCofees(): CofeeDto[] {
-    return this.appService.getCofee();
-  }
+ @Get(':id/detalhes') 
+ getCofeeById(@Param('id') id: string): CofeeDto {
+ return this.appService.getCofeeById(id);
+ }
 
-  @Get('Cofees/:id')
-  getCofeeById(@Param('id') id: string): CofeeDto {
-    return this.appService.getCofeeById(id);
-  }
+ @Post('coffees/create')
 
-  @Get(':id')
-  findOne(@Param('id') id: string): CofeeDto {
-    return this.appService.getCofeeById(id);
-  }
-
-
-  @Post('coffes/create')
-  createCofee(@Body() newCofee: CofeeDto): CofeeDto {
-    return this.appService.createCofee(newCofee);
-  }
+ createCofee(@Body() newCofee: CofeeDto): CofeeDto {
+ return this.appService.createCofee(newCofee);
+ }
 }
