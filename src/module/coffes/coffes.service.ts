@@ -1,15 +1,6 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { CofeeDto } from './types/coffes'; 
 
-type CofeeDto = {
-    nome: string;
-    tipo: string;
-    id: string;
-    descricao: string;
-    preco: string;
-     tag: string[];
-     date_create:String;
-     };
 const listaCofess: CofeeDto[] = [
   {
     nome: "Expresso Tradicional",
@@ -85,7 +76,13 @@ export class CoffeService {
     listaCofess.push(newCofee);
     return newCofee;
   }
-  getfilterCoffes(start_date:Date,end_date:Date): CofeeDto[]{
-
+  getFilterByDate(startDate: Date, endDate: Date): CofeeDto[] {
+    const filteredCoffees = listaCofess.filter((coffee) => {
+      const coffeeDate = new Date(coffee.date_create);
+      return coffeeDate >= startDate && coffeeDate <= endDate;
+    });
+    return filteredCoffees;
   }
+
+
 }

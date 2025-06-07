@@ -25,4 +25,8 @@ getCofees(): CofeeDto[] {
  CofeeQueryAll(@Query() Cofee: CofeeDto,@Param() id: string) {
  console.log(Cofee,id);
  }
+
+ 
+
+
 }

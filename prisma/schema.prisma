@@ -1,15 +1,76 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  output   = "../generated/prisma" 
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Cafe {
+  id Int @id @default(autoincrement())
+  nome String
+  tipo String
+  preco Float 
+  tags  TagCafe[]    
+  itemPedidos ItemPedido[] 
+}
+
+
+model TagCafe {
+  id  Int @id @default(autoincrement())
+  nome String
+  cafe Cafe  @relation(fields: [cafeId], references: [id]) 
+  cafeId Int   
+}
+
+
+model Pedido {
+  id Int @id @default(autoincrement())
+  dataDoPedido  DateTime @default(now())
+  totalDoPedido Float        
+  cliente Cliente @relation(fields: [clienteId], references: [id])
+  clienteId Int      
+  entrega Entrega[]   
+  itens  ItemPedido[] 
+}
+
+
+model ItemPedido {
+  id Int @id @default(autoincrement())
+  quantidade Int
+  precoUnitario Float 
+  pedido Pedido @relation(fields: [pedidoId], references: [id])
+  pedidoId Int   
+  
+ 
+  cafe Cafe@relation(fields: [cafeId], references: [id])
+  cafeId Int 
+}
+
+
+model Entrega {
+  id Int @id @default(autoincrement())
+  endereco String
+  status  String
+  
+ 
+  pedido Pedido @relation(fields: [pedidoId], references: [id])
+  pedidoId Int @unique 
+}
+
+
+model Cliente {
+  id Int  @id @default(autoincrement())
+  nome String
+  email String @unique 
+  cpf  String  @unique 
+  telefone String 
+  pedidos  Pedido[] 
+}
+enum Status {
+  pendente
+  caminho
+  entregue 
 }
