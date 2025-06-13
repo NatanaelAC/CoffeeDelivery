@@ -1,4 +1,4 @@
-import { IsString, IsArray, ArrayNotEmpty, IsDateString } from 'class-validator';
+import { IsString, IsArray, ArrayNotEmpty, IsDateString,IsOptional } from 'class-validator';
 
 
 export class CofeeDto {
@@ -25,4 +25,20 @@ export class CofeeDto {
  
   @IsDateString()
   date_create: string;
+}
+export class CafeResponseDto {
+  id: number;
+
+  nome: string;
+
+  tags: string[]; 
+}
+export class QueryDto {
+  @IsOptional()
+  @IsString()
+  tipo?: string; 
+
+  @IsOptional()
+  @IsString()
+  nome_do_cafe?: string;
 }
