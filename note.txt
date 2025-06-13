@@ -1,0 +1,9 @@
+git checkout -b minha-nova-feature
+git add .
+git commit -m "nome"
+git push
+
+npm uninstall nome-da-dependencia
+npm install @prisma/client
+npm install prisma --save-dev
+npx prisma migrate dev --name init
