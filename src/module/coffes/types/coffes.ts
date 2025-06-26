@@ -1,4 +1,4 @@
-import { IsString, IsArray, ArrayNotEmpty, IsDateString,IsOptional } from 'class-validator';
+import { IsString, IsArray, ArrayNotEmpty, IsDateString,IsOptional ,IsNumber} from 'class-validator';
 
 
 export class CofeeDto {
