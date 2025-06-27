@@ -47,7 +47,6 @@ const listaCofess: CofeeDto[] = [
     tag: ["suave", "tradicional"],
     date_create: new Date("2025-05-30T23:27:50.260Z").toISOString()
   }
-  
 ];
 
 console.log(listaCofess);
@@ -73,32 +72,42 @@ export class CoffeService {
       throw new ConflictException(`Café com ID "${newCofee.id}" já existe.`);
     }
 
-    listaCofess.push(newCofee);
-    return newCofee;
+   
+    const coffeeToSave: CofeeDto = {
+      ...newCofee,
+      id: newCofee.id || (new Date().getTime()).toString(),
+      date_create: newCofee.date_create || new Date().toISOString() 
+    };
+
+    listaCofess.push(coffeeToSave);
+    return coffeeToSave;
   }
+
   getFilterByDate(startDate: Date, endDate: Date): CofeeDto[] {
     const filteredCoffees = listaCofess.filter((coffee) => {
+      if (!coffee.date_create) {
+        return false;
+      }
       const coffeeDate = new Date(coffee.date_create);
       return coffeeDate >= startDate && coffeeDate <= endDate;
     });
     return filteredCoffees;
   }
 
- 
   async findAll(): Promise<CofeeDto[]> {
-    return this.getCofee(); 
+    return this.getCofee();
   }
 
   async create(createCafeDto: CofeeDto): Promise<CofeeDto> {
-    return this.createCofee(createCafeDto); 
+    return this.createCofee(createCafeDto);
   }
 
   async findPedidosByCafeId(cafeId: string): Promise<any[]> {
     const cafe = this.getCofeeById(cafeId);
     if (!cafe) {
-      return []; 
+      return [];
     }
- 
+
     return [{ cafe, quantidadeComprada: 1 }];
   }
 
@@ -115,7 +124,7 @@ export class CoffeService {
   }
 
   async removeTag(tagId: string): Promise<void> {
-  
+
     throw new Error('Operação de remoção de tag não suportada.');
   }
 }

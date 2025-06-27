@@ -56,3 +56,10 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 /generated/prisma
+
+# Entries from CoffeeDelivery (Projeto B) - Combined/Ensured
+# (These might be duplicates or already covered, but ensures nothing is missed)
+dist
+coverage
+*.log
+*.env

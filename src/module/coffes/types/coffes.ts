@@ -1,42 +1,42 @@
-import { IsString, IsArray, ArrayNotEmpty, IsDateString,IsOptional ,IsNumber} from 'class-validator';
-
+import { IsString, IsArray, ArrayNotEmpty, IsDateString, IsOptional } from 'class-validator';
 
 export class CofeeDto {
   @IsString()
-  nome: string;
+  nome!: string;
 
   @IsString()
-  tipo: string;
+  tipo!: string;
 
-  @IsString() 
-  id: string; 
+  @IsOptional() 
+  @IsString()
+  id?: string; 
 
   @IsString()
-  descricao: string;
+  descricao!: string;
 
   @IsString() 
-  preco: string;
+  preco!: string;
 
   @IsArray()
-  @ArrayNotEmpty()
-  @IsString()
-  tag: string[];
+  @ArrayNotEmpty() 
+  @IsString({ each: true }) 
+  tag!: string[];
 
- 
   @IsDateString()
-  date_create: string;
+  @IsOptional() 
+  date_create?: string;
 }
+
 export class CafeResponseDto {
-  id: number;
-
-  nome: string;
-
-  tags: string[]; 
+  id!: number;
+  nome!: string;
+  tags!: string[];
 }
+
 export class QueryDto {
   @IsOptional()
   @IsString()
-  tipo?: string; 
+  tipo?: string;
 
   @IsOptional()
   @IsString()
